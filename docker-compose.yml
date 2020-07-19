@@ -1,0 +1,14 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jenkins
+    ports:
+      - 18080:8080
+      - 50000:50000
+    volumes:
+      - /home/pi/docker_files/jenkins/data:/var/jenkins_home
+      - /home/pi/docker_files/jenkins/jenkins-docker-certs:/certs/client
+    restart: unless-stopped

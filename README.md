@@ -31,6 +31,12 @@ docker container run \
 rpi-jenkins
 ```
 
+or use docker-compose
+```
+docker-compose up -d --build && docker image prune -f
+```
+
+
 this will automatically create a 'jenkins' volume on docker host, that will survive container stop/restart/deletion.
 
 ---
