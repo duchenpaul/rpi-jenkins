@@ -24,7 +24,14 @@ This will store the workspace in /var/jenkins_home. All Jenkins data lives in th
 You will probably want to make that an explicit volume so you can manage it and attach to another container for upgrades :
 
 ```
-docker run -p 8080:8080 -p 50000:50000 -v jenkins:/var/jenkins_home wouterds/rpi-jenkins
+docker container run \
+  --name jenkins \
+  -d \
+  --publish 18080:8080 \
+  --publish 50000:50000 \
+  --volume /home/pi/docker_files/jenkins/data:/var/jenkins_home \
+  --volume /home/pi/docker_files/jenkins/jenkins-docker-certs:/certs/client:ro \
+rpi-jenkins
 ```
 
 this will automatically create a 'jenkins' volume on docker host, that will survive container stop/restart/deletion.
