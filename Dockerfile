@@ -13,7 +13,7 @@ ENV JENKINS_HOME /var/jenkins_home
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
 # Enable cross build
-RUN ["cross-build-start"]
+# RUN ["cross-build-start"]
 
 # Base image: ubuntu
 RUN sed -i 's/ports.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
@@ -30,7 +30,7 @@ RUN apt-get update \
 RUN curl -fL -o /opt/jenkins.war https://mirrors.tuna.tsinghua.edu.cn/jenkins/war/latest/jenkins.war
 
 # Disable cross build
-RUN ["cross-build-end"]
+# RUN ["cross-build-end"]
 
 # Expose volume
 VOLUME ${JENKINS_HOME}
