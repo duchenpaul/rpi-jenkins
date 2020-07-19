@@ -19,7 +19,7 @@ Jenkins is an open source automation server written in Java. The project was for
 This will store the workspace in /var/jenkins_home. All Jenkins data lives in there - including plugins and configuration.
 You will probably want to make that an explicit volume so you can manage it and attach to another container for upgrades :
 
-```
+```bash
 docker build . -t rpi-jenkins && docker images prune -f
 docker container run \
   --name jenkins \
@@ -32,12 +32,22 @@ rpi-jenkins
 ```
 
 or use docker-compose
-```
+```bash
 docker-compose up -d --build && docker image prune -f
 ```
 
 
 this will automatically create a 'jenkins' volume on docker host, that will survive container stop/restart/deletion.
+
+## 国内plugin加速
+```bash
+# In docker: 
+# go to JENKINS_HOME
+cd /var/jenkins_home/updates
+sed -i 's/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json
+```
+
+
 
 ---
 
