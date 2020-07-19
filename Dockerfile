@@ -1,8 +1,12 @@
-FROM jsurf/rpi-raspbian:latest
-MAINTAINER Wouter De Schuyter <wouter.de.schuyter@gmail.com>
+FROM arm32v7/ubuntu
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Jenkins version
-ENV JENKINS_VERSION 2.64
+ENV JENKINS_VERSION 2.99
 
 # Other env variables
 ENV JENKINS_HOME /var/jenkins_home
@@ -11,13 +15,19 @@ ENV JENKINS_SLAVE_AGENT_PORT 50000
 # Enable cross build
 RUN ["cross-build-start"]
 
+# Base image: ubuntu
+RUN sed -i 's/ports.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+
 # Install dependencies
 RUN apt-get update \
   && apt-get install -y --no-install-recommends curl openjdk-8-jdk \
   && rm -rf /var/lib/apt/lists/*
 
 # Get Jenkins
-RUN curl -fL -o /opt/jenkins.war https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/{$JENKINS_VERSION}/jenkins-war-{$JENKINS_VERSION}.war
+# official
+# RUN curl -fL -o /opt/jenkins.war https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/{$JENKINS_VERSION}/jenkins-war-{$JENKINS_VERSION}.war
+# Tsinghua
+RUN curl -fL -o /opt/jenkins.war https://mirrors.tuna.tsinghua.edu.cn/jenkins/war/latest/jenkins.war
 
 # Disable cross build
 RUN ["cross-build-end"]
