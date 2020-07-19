@@ -16,14 +16,11 @@ Jenkins is an open source automation server written in Java. The project was for
 
 ### Usage
 
-```
-docker run -p 8080:8080 -p 50000:50000 wouterds/rpi-jenkins
-```
-
 This will store the workspace in /var/jenkins_home. All Jenkins data lives in there - including plugins and configuration.
 You will probably want to make that an explicit volume so you can manage it and attach to another container for upgrades :
 
 ```
+docker built . -t rpi-jenkins && docker images prune -f
 docker container run \
   --name jenkins \
   -d \
