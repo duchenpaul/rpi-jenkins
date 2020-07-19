@@ -9,7 +9,7 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 RUN sed -i 's/ports.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get -y install tzdata curl
+RUN apt-get -y install tzdata curl git
 
 # Jenkins version
 ENV JENKINS_VERSION 2.99
