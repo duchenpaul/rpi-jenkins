@@ -41,5 +41,7 @@ WORKDIR ${JENKINS_HOME}
 # Expose ports
 EXPOSE 8080 ${JENKINS_SLAVE_AGENT_PORT}
 
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://127.0.0.1:8080/ || exit 1
 # Start Jenkins
 CMD ["sh", "-c", "java -jar /opt/jenkins.war"]
