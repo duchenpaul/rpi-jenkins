@@ -2,8 +2,14 @@ FROM arm32v7/ubuntu
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV TZ Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+
+# Base image: ubuntu
+RUN sed -i 's/ports.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+
+RUN apt-get update
+RUN apt-get -y install tzdata curl
 
 # Jenkins version
 ENV JENKINS_VERSION 2.99
@@ -15,12 +21,8 @@ ENV JENKINS_SLAVE_AGENT_PORT 50000
 # Enable cross build
 # RUN ["cross-build-start"]
 
-# Base image: ubuntu
-RUN sed -i 's/ports.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
-
 # Install dependencies
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends curl openjdk-8-jdk \
+RUN apt-get install -y --no-install-recommends openjdk-8-jdk \
   && rm -rf /var/lib/apt/lists/*
 
 # Get Jenkins
