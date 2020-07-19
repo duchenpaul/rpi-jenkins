@@ -1,9 +1,10 @@
 version: "3"
 services:
-  rpi-jenkins:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
+    image: rpi-jenkins
     container_name: jenkins
     ports:
       - 18080:8080
